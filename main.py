@@ -11,6 +11,19 @@ def congratulate_user():
 def is_game_over():
     return guessed == WORDS_TO_WIN or errors == ERRORS_TO_LOSE
 
+def guess_is_valid(candidate):
+    if candidate in guesses:
+        print("choose a dif word bc u repeat urself ")
+    for letter in candidate:
+        if letter not in word:
+            print(f"You can not use letter {letter}")
+            return False
+        count = word.count(letter)
+        if count < candidate.count(letter):
+            print(f"You can use letter {letter} only {count} times")
+            return False
+    return True
+
 
 def guess_is_valid(candidate):
     for letter in candidate:
@@ -46,6 +59,7 @@ while not is_game_over():
     if not guess_is_valid(guess):
         continue
 
+
     if guess in full_list:
         guessed += 1
         guesses.append(guess)
@@ -55,4 +69,7 @@ while not is_game_over():
         print(f"That's right! {WORDS_TO_WIN - guessed} to go")
     else:
         errors += 1
+        if errors == ERRORS_TO_LOSE:
+            print("u lost better luck next time: ")
+            break
         print(f"Oops :( No such word, you have {ERRORS_TO_LOSE - errors} lives more")
